@@ -5,6 +5,7 @@ Implements VIES validation to use on VAT fields in Rapidez
 ## Installation
 
 ```
+yarn add jsvat --dev
 composer require rapidez/vat-validation
 ```
 
