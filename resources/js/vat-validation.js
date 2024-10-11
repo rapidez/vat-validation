@@ -3,7 +3,7 @@ import { token } from 'Vendor/rapidez/core/resources/js/stores/useUser'
 import { mask } from 'Vendor/rapidez/core/resources/js/stores/useMask'
 import { checkVAT, countries } from 'jsvat'
 
-document.addEventListener('turbo:load', function () {
+document.addEventListener('vue:loaded', function () {
     window.app.$on('vat-change', async (event) => {
         let cleanVatid = event.target.value.replace(/[\s\.-]/g, '')
 
