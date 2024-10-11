@@ -1,4 +1,4 @@
-import { useThrottleFn } from '@vueuse/core'
+import { useThrottleFn, useMemoize } from '@vueuse/core'
 import { token } from 'Vendor/rapidez/core/resources/js/stores/useUser'
 import { mask } from 'Vendor/rapidez/core/resources/js/stores/useMask'
 import { checkVAT, countries } from 'jsvat'
@@ -32,6 +32,8 @@ document.addEventListener('vue:loaded', function () {
             return
         }
 
+        console.log(result)
+
         event.target.setCustomValidity(result ? '' : window.config.vat_validation.translations.failed)
         event.target.reportValidity()
     });
@@ -46,7 +48,7 @@ function preValidate(vatId) {
     return result.isValid
 }
 
-const validate = useThrottleFn(
+const validate = useMemoize(useThrottleFn(
     async function (vatId) {
         if (vatId.length == 0) {
             return false
@@ -72,4 +74,4 @@ const validate = useThrottleFn(
     },
     5000,
     true,
-)
+))
