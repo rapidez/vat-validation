@@ -34,7 +34,7 @@ class VatController
 
             return ['result' => $result];
         } catch (ViesException $exception) {
-            return ['error' => $exception->getMessage()];
+            abort(503, $exception->getMessage());
         }
     }
 }

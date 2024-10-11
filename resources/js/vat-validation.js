@@ -105,14 +105,7 @@ const validate = useThrottleFn(
 
         return await window
             .rapidezAPI('post', 'vat-validate', data, options)
-            .then((res) => {
-                if (res.error) {
-                    window.Notify(res.error, 'error')
-                    return 'error'
-                }
-
-                return res.result
-            })
+            .then((res) => res.result)
             .catch(() => {
                 window.Notify(window.config.translations.errors.wrong, 'error')
                 return 'error'
