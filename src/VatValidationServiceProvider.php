@@ -10,7 +10,7 @@ class VatValidationServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/rapidez/vat-validation.php', 'rapidez.vat-validation');
+        $this->mergeConfigFrom(__DIR__.'/../config/rapidez/vatvalidation.php', 'rapidez.vatvalidation');
     }
 
     public function boot()
@@ -32,7 +32,7 @@ class VatValidationServiceProvider extends ServiceProvider
     public function bootPublishables() : self
     {
         $this->publishes([
-            __DIR__.'/../config/rapidez/vat-validation.php' => config_path('rapidez/vat-validation.php'),
+            __DIR__.'/../config/rapidez/vatvalidation.php' => config_path('rapidez/vatvalidation.php'),
         ], 'rapidez-vat-config');
 
         $this->publishes([

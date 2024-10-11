@@ -16,7 +16,7 @@ class VatController
             'id' => 'string|required',
         ]);
 
-        if (!config('rapidez.vat-validation.allow-anywhere')) {
+        if (!config('rapidez.vatvalidation.allow_anywhere')) {
             // Check if we should validate here
             abort_unless($request->bearerToken() || $request->headers->get('referer') === route('account.register'), 401);
 
@@ -28,7 +28,7 @@ class VatController
         try {
             // Try validating the number
             $validator = new Validator;
-            $result = Cache::remember('vat_' . $request->id, config('rapidez.vat-validation.cache-duration'), function () use ($request, $validator) {
+            $result = Cache::remember('vat_' . $request->id, config('rapidez.vatvalidation.cache_duration'), function () use ($request, $validator) {
                 return $validator->validateVatNumber($request->id);
             });
 
