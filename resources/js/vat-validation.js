@@ -18,6 +18,10 @@ document.addEventListener('vue:loaded', function () {
 
         event.target.setCustomValidity('')
 
+        if (!event.target.checkValidity()) {
+            return
+        }
+
         if (!cleanVatid || cleanVatid.length == 0) {
             return
         }
