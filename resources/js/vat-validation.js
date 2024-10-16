@@ -70,7 +70,6 @@ const validate = useMemoize(useThrottleFn(
 
         return await window
             .rapidezAPI('post', 'vat-validate', data, options)
-            .then((res) => res.result)
             .catch(() => {
                 window.Notify(window.config.translations.errors.wrong, 'error')
                 return 'error'

@@ -4,13 +4,14 @@ namespace Rapidez\VatValidation\Http\Controllers;
 
 use Ibericode\Vat\Validator;
 use Ibericode\Vat\Vies\ViesException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
 class VatController
 {
     /** @return array<string, mixed> */
-    public function __invoke(Request $request): array
+    public function __invoke(Request $request): JsonResponse
     {
         $request->validate([
             'id' => 'string|required',
@@ -32,7 +33,7 @@ class VatController
                 return $validator->validateVatNumber($request->id);
             });
 
-            return ['result' => $result];
+            return response()->json($result);
         } catch (ViesException $exception) {
             abort(503, $exception->getMessage());
         }
