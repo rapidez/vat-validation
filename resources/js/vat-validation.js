@@ -2,7 +2,6 @@ import { useThrottleFn, useMemoize } from '@vueuse/core'
 import { token } from 'Vendor/rapidez/core/resources/js/stores/useUser'
 import { mask } from 'Vendor/rapidez/core/resources/js/stores/useMask'
 import { checkVAT, countries } from 'jsvat'
-import { FetchError } from 'Vendor/rapidez/core/resources/js/fetch'
 
 document.addEventListener('vue:loaded', function () {
     window.app.$on('vat-change', async (event) => {
@@ -36,8 +35,6 @@ document.addEventListener('vue:loaded', function () {
         if (result === 'error') {
             return
         }
-
-        console.log(result)
 
         event.target.setCustomValidity(result ? '' : window.config.vat_validation.translations.failed)
         event.target.reportValidity()
