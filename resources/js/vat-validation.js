@@ -2,6 +2,7 @@ import { useThrottleFn, useMemoize } from '@vueuse/core'
 import { token } from 'Vendor/rapidez/core/resources/js/stores/useUser'
 import { mask } from 'Vendor/rapidez/core/resources/js/stores/useMask'
 import { checkVAT, countries } from 'jsvat'
+import { FetchError } from 'Vendor/rapidez/core/resources/js/fetch'
 
 document.addEventListener('vue:loaded', function () {
     window.app.$on('vat-change', async (event) => {
@@ -65,12 +66,19 @@ const validate = useMemoize(useThrottleFn(
         let options = {
             headers: {
                 Authorization: `Bearer ${token.value || mask.value}`,
+                Accept: 'application/json',
             },
         }
 
         return await window
             .rapidezAPI('post', 'vat-validate', data, options)
-            .catch(() => {
+            .catch((error) => {
+                if (FetchError.prototype.isPrototypeOf(error)) {
+                    if (error.response.status === 422) {
+                        return false
+                    }
+                }
+
                 window.Notify(window.config.translations.errors.wrong, 'error')
                 return 'error'
             })
