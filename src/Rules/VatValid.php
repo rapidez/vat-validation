@@ -16,7 +16,6 @@ class VatValid implements ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         try {
-            // Try validating the number
             $validator = new Validator;
             $result = Cache::remember('vat_' . $value, config('rapidez.vatvalidation.cache_duration'), function () use ($value, $validator) {
                 return $validator->validateVatNumber($value);
