@@ -15,17 +15,13 @@ class VatValid implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        try {
-            $validator = new Validator;
-            $result = Cache::remember('vat_' . $value, config('rapidez.vatvalidation.cache_duration'), function () use ($value, $validator) {
-                return $validator->validateVatNumber($value);
-            });
+        $validator = new Validator;
+        $result = Cache::remember('vat_' . $value, config('rapidez.vatvalidation.cache_duration'), function () use ($value, $validator) {
+            return $validator->validateVatNumber($value);
+        });
 
-            if (!$result) {
-                $fail('Vat validation failed.');
-            }
-        } catch (ViesException $exception) {
-            $fail($exception->getMessage());
+        if (!$result) {
+            $fail('Vat validation failed.');
         }
     }
 }
