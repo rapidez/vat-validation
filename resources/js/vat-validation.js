@@ -36,8 +36,6 @@ document.addEventListener('vue:loaded', function () {
             return
         }
 
-        console.log(result)
-
         event.target.setCustomValidity(result ? '' : window.config.vat_validation.translations.failed)
         event.target.reportValidity()
     });
@@ -65,12 +63,19 @@ const validate = useMemoize(useThrottleFn(
         let options = {
             headers: {
                 Authorization: `Bearer ${token.value || mask.value}`,
+                Accept: 'application/json',
             },
         }
 
         return await window
             .rapidezAPI('post', 'vat-validate', data, options)
-            .catch(() => {
+            .catch((error) => {
+                if (FetchError.prototype.isPrototypeOf(error)) {
+                    if (error.response.status === 422) {
+                        return false
+                    }
+                }
+
                 window.Notify(window.config.translations.errors.wrong, 'error')
                 return 'error'
             })

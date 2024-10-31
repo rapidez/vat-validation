@@ -2,16 +2,13 @@
 
 namespace Rapidez\VatValidation\Http\Controllers;
 
-use Ibericode\Vat\Validator;
-use Ibericode\Vat\Vies\ViesException;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
+use Rapidez\VatValidation\Rules\VatValid;
 
 class VatController
 {
     /** @return array<string, mixed> */
-    public function __invoke(Request $request): JsonResponse
+    public function __invoke(Request $request): mixed
     {
         $request->validate([
             'id' => 'string|required',
@@ -26,16 +23,10 @@ class VatController
             }
         }
 
-        try {
-            // Try validating the number
-            $validator = new Validator;
-            $result = Cache::remember('vat_' . $request->id, config('rapidez.vatvalidation.cache_duration'), function () use ($request, $validator) {
-                return $validator->validateVatNumber($request->id);
-            });
+        $request->validate([
+            'id' => new VatValid,
+        ]);
 
-            return response()->json($result);
-        } catch (ViesException $exception) {
-            abort(503, $exception->getMessage());
-        }
+        return true;
     }
 }
