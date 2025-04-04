@@ -3,6 +3,8 @@ import { token } from 'Vendor/rapidez/core/resources/js/stores/useUser'
 import { mask } from 'Vendor/rapidez/core/resources/js/stores/useMask'
 import { checkVAT, countries } from 'jsvat'
 
+const viesCheckable = ['AT', 'BE', 'BG', 'CY', 'CZ', 'DE', 'DK', 'EE', 'EL', 'ES', 'FI', 'FR', 'HR', 'HU', 'IE', 'IT', 'LT', 'LU', 'LV', 'MT', 'NL', 'PL', 'PT', 'RO', 'SE', 'SI', 'SK', 'XI']
+
 document.addEventListener('vue:loaded', function () {
     window.app.$on('vat-change', async (event) => {
         let cleanVatid = event.target.value.replace(/[\s\.-]/g, '')
@@ -31,6 +33,11 @@ document.addEventListener('vue:loaded', function () {
             return
         }
 
+        if (!isViesCheckable(cleanVatid)) {
+            // If we can't check it by VIES then we just assume it's valid.
+            return
+        }
+
         let result = await validate(cleanVatid)
         if (result === 'error') {
             return
@@ -40,6 +47,15 @@ document.addEventListener('vue:loaded', function () {
         event.target.reportValidity()
     });
 })
+
+function isViesCheckable(vatId) {
+    if (vatId.length < 2) {
+        return false
+    }
+
+    let code = vatId.substring(0, 2)
+    return viesCheckable.includes(code)
+}
 
 function preValidate(vatId) {
     let result = checkVAT(vatId, countries)
