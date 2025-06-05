@@ -1,6 +1,12 @@
 # Changelog 
 
-[Unreleased changes](https://github.com/rapidez/vat-validation/compare/3.0.0...3.0.0)
+[Unreleased changes](https://github.com/rapidez/vat-validation/compare/4.0.0...4.0.0)
+## [4.0.0](https://github.com/rapidez/vat-validation/releases/tag/4.0.0) - 2025-06-05
+
+### Added
+
+- Rapidez v4 support (cf5e835)
+
 ## [3.0.0](https://github.com/rapidez/vat-validation/releases/tag/3.0.0) - 2025-04-10
 
 ### Added
