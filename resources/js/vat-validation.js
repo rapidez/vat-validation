@@ -5,7 +5,7 @@ import { checkVAT, countries } from 'jsvat'
 
 const viesCheckable = ['AT', 'BE', 'BG', 'CY', 'CZ', 'DE', 'DK', 'EE', 'EL', 'ES', 'FI', 'FR', 'HR', 'HU', 'IE', 'IT', 'LT', 'LU', 'LV', 'MT', 'NL', 'PL', 'PT', 'RO', 'SE', 'SI', 'SK', 'XI']
 
-document.addEventListener('vue:loaded', function () {
+function init () {
     window.app.$on('vat-change', async (event) => {
         let cleanVatid = event.target.value.replace(/[\s\.-]/g, '')
 
@@ -46,7 +46,12 @@ document.addEventListener('vue:loaded', function () {
         event.target.setCustomValidity(result ? '' : window.config.vat_validation.translations.failed)
         event.target.reportValidity()
     });
-})
+}
+
+document.addEventListener('vue:loaded', init)
+if (window.app) {
+    init()
+}
 
 function isViesCheckable(vatId) {
     if (vatId.length < 2) {
