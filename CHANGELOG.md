@@ -1,6 +1,12 @@
 # Changelog 
 
-[Unreleased changes](https://github.com/rapidez/vat-validation/compare/4.0.0...4.0.0)
+[Unreleased changes](https://github.com/rapidez/vat-validation/compare/4.0.1...4.0.1)
+## [4.0.1](https://github.com/rapidez/vat-validation/releases/tag/4.0.1) - 2025-06-24
+
+### Fixed
+
+- Initializing fix + added translations (#5)
+
 ## [4.0.0](https://github.com/rapidez/vat-validation/releases/tag/4.0.0) - 2025-06-05
 
 ### Added
