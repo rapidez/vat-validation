@@ -21,7 +21,7 @@ class VatValid implements ValidationRule
         });
 
         if (!$result) {
-            $fail('Vat validation failed.');
+            $fail('frontend.vat_validation.failed')->translate();
         }
     }
 }
