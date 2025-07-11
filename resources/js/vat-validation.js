@@ -57,50 +57,43 @@ const validate = useMemoize(useThrottleFn(
     true,
 ))
 
-function init () {
-    window.app.$on('vat-change', async (event) => {
-        let cleanVatid = event.target.value.replace(/[\s\.-]/g, '')
+export default async (el) => {
+    let cleanVatid = el.value.replace(/[\s\.-]/g, '')
 
-        if(event.target.value != cleanVatid) {
-            event.target.value = cleanVatid
+    if(el.value != cleanVatid) {
+        el.value = cleanVatid
 
-            // Set field and call `change` event to tell Vue
-            // This event unfortunately also calls this function again, so we return here to avoid a double request
-            event.target.dispatchEvent(new Event('change'))
-            return
-        }
+        // Set field and call `change` event to tell Vue
+        // This event unfortunately also calls this function again, so we return here to avoid a double request
+        el.dispatchEvent(new Event('change'))
+        return
+    }
 
-        event.target.setCustomValidity('')
+    el.setCustomValidity('')
 
-        if (!event.target.checkValidity()) {
-            return
-        }
+    if (!el.checkValidity()) {
+        return
+    }
 
-        if (!cleanVatid || cleanVatid.length == 0) {
-            return
-        }
+    if (!cleanVatid || cleanVatid.length == 0) {
+        return
+    }
 
-        if (preValidate(cleanVatid) === false) {
-            event.target.setCustomValidity(window.config.vat_validation.translations.invalid)
-            return
-        }
+    if (preValidate(cleanVatid) === false) {
+        el.setCustomValidity(window.config.vat_validation.translations.invalid)
+        return
+    }
 
-        if (!isViesCheckable(cleanVatid)) {
-            // If we can't check it by VIES then we just assume it's valid.
-            return
-        }
+    if (!isViesCheckable(cleanVatid)) {
+        // If we can't check it by VIES then we just assume it's valid.
+        return
+    }
 
-        let result = await validate(cleanVatid)
-        if (result === 'error') {
-            return
-        }
+    let result = await validate(cleanVatid)
+    if (result === 'error') {
+        return
+    }
 
-        event.target.setCustomValidity(result ? '' : window.config.vat_validation.translations.failed)
-        event.target.reportValidity()
-    });
-}
-
-document.addEventListener('vue:loaded', init)
-if (window.app) {
-    init()
+    el.setCustomValidity(result ? '' : window.config.vat_validation.translations.failed)
+    el.reportValidity()
 }
