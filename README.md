@@ -16,9 +16,17 @@ composer require rapidez/vat-validation
 Every Rapidez package will work with this package out of the box, and will not require any configuration.
 
 However, if you're using your own fields, you can add the VAT check to an input by adding this to the input:
+
 ```
-v-on:change="window.app.$emit('vat-change', $event)"
+v-validate.vat
 ```
+
+> [!NOTE]
+> If you're adding validation as an attribute onto a blade component, you will have to do something like this instead:
+> ```
+> v-validate.vat="true"
+> ```
+> This is because the Laravel blade formatter will automatically turn it into `v-validate.vat="v-validate.vat"` if you don't specify an expression.
 
 ## VIES validation
 
