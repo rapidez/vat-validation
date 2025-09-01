@@ -101,6 +101,6 @@ function init () {
 }
 
 document.addEventListener('vue:loaded', init)
-if (window.app) {
+if (window.app && window.app.$on) {
     init()
 }
