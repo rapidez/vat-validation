@@ -15,12 +15,12 @@ function isViesCheckable(vatId) {
 }
 
 function shouldForceValidate(vatId) {
-    if (!window.config.vat_validation.force_validate) {
+    if (!window.config.vat_validation.force_validation) {
         return false
     }
 
     let code = vatId.substring(0, 2)
-    if (window.config.vat_validation.force_exclusions.includes(code)) {
+    if (!window.config.vat_validation.force_exclusions.includes(code)) {
         return false
     }
 
