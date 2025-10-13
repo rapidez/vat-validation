@@ -1,9 +1,10 @@
 import validateElementVAT from './vat-validation'
+import { useEventListener } from '@vueuse/core'
 
 Vue.directive('validate', {
     bind(el, binding) {
         if ('vat' in binding.modifiers) {
-            el.addEventListener('change', (event) => validateElementVAT(event.target))
+            useEventListener(el, 'change', (event) => validateElementVAT(event.target))
             validateElementVAT(el)
         }
     }
