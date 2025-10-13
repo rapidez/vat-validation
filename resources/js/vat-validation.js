@@ -14,6 +14,19 @@ function isViesCheckable(vatId) {
     return viesCheckable.includes(code)
 }
 
+function shouldForceValidate(vatId) {
+    if (!window.config.vat_validation.force_validation) {
+        return false
+    }
+
+    let code = vatId.substring(0, 2)
+    if (window.config.vat_validation.force_exclusions.includes(code)) {
+        return false
+    }
+
+    return true
+}
+
 function preValidate(vatId) {
     let result = checkVAT(vatId, countries)
     if (!result.isSupportedCountry) {
@@ -85,7 +98,11 @@ export default async (el) => {
     }
 
     if (!isViesCheckable(cleanVatid)) {
-        // If we can't check it by VIES then we just assume it's valid.
+        // If we can't check it by VIES, assume it's valid unless we enable the "force validation" config option
+        if (shouldForceValidate(cleanVatid)) {
+            el.setCustomValidity(window.config.vat_validation.translations.invalid)
+        }
+        
         return
     }
 

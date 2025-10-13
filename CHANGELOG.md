@@ -1,6 +1,16 @@
 # Changelog 
 
-[Unreleased changes](https://github.com/rapidez/vat-validation/compare/4.0.1...4.0.1)
+[Unreleased changes](https://github.com/rapidez/vat-validation/compare/4.1.0...4.1.0)
+## [4.1.0](https://github.com/rapidez/vat-validation/releases/tag/4.1.0) - 2025-09-24
+
+### Added
+
+- Forced validation option (#10)
+
+### Fixed
+
+- Double check that $on exists (#9)
+
 ## [4.0.1](https://github.com/rapidez/vat-validation/releases/tag/4.0.1) - 2025-06-24
 
 ### Fixed
