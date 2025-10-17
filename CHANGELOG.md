@@ -1,6 +1,12 @@
 # Changelog 
 
-[Unreleased changes](https://github.com/rapidez/vat-validation/compare/4.1.0...4.1.0)
+[Unreleased changes](https://github.com/rapidez/vat-validation/compare/4.2.0...4.2.0)
+## [4.2.0](https://github.com/rapidez/vat-validation/releases/tag/4.2.0) - 2025-10-17
+
+### Added
+
+- Configurable validation rules (#11)
+
 ## [4.1.0](https://github.com/rapidez/vat-validation/releases/tag/4.1.0) - 2025-09-24
 
 ### Added
