@@ -21,4 +21,8 @@ return [
     'force_exclusions' => [
         // 'GB',
     ],
+
+    'rules' => [
+        \Rapidez\VatValidation\Rules\VatValid::class,
+    ],
 ];
