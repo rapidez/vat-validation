@@ -70,11 +70,11 @@ const validate = useMemoize(useThrottleFn(
     true,
 ))
 
-function init () {
-    window.app.$on('vat-change', async (event) => {
+function init() {
+    window.$on('vat-change', async (event) => {
         let cleanVatid = event.target.value.replace(/[\s\.-]/g, '')
 
-        if(event.target.value != cleanVatid) {
+        if (event.target.value != cleanVatid) {
             event.target.value = cleanVatid
 
             // Set field and call `change` event to tell Vue
@@ -118,6 +118,6 @@ function init () {
 }
 
 document.addEventListener('vue:loaded', init)
-if (window.app && window.app.$on) {
+if (window.$on) {
     init()
 }
