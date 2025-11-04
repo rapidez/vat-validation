@@ -17,7 +17,7 @@ Every Rapidez package will work with this package out of the box, and will not r
 
 However, if you're using your own fields, you can add the VAT check to an input by adding this to the input:
 ```
-v-on:change="window.app.$emit('vat-change', $event)"
+v-on:change="window.$emit('vat-change', $event)"
 ```
 
 ## VIES validation
