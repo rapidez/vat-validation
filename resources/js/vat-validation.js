@@ -1,6 +1,7 @@
 import { useThrottleFn, useMemoize } from '@vueuse/core'
 import { token } from 'Vendor/rapidez/core/resources/js/stores/useUser'
 import { mask } from 'Vendor/rapidez/core/resources/js/stores/useMask'
+import { on } from 'Vendor/rapidez/core/resources/js/polyfills/emit.js'
 import { checkVAT, countries } from 'jsvat'
 
 const viesCheckable = ['AT', 'BE', 'BG', 'CY', 'CZ', 'DE', 'DK', 'EE', 'EL', 'ES', 'FI', 'FR', 'HR', 'HU', 'IE', 'IT', 'LT', 'LU', 'LV', 'MT', 'NL', 'PL', 'PT', 'RO', 'SE', 'SI', 'SK', 'XI']
@@ -70,54 +71,47 @@ const validate = useMemoize(useThrottleFn(
     true,
 ))
 
-function init() {
-    window.$on('vat-change', async (event) => {
-        let cleanVatid = event.target.value.replace(/[\s\.-]/g, '')
+on('vat-change', async (event) => {
+    let cleanVatid = event.target.value.replace(/[\s\.-]/g, '')
 
-        if (event.target.value != cleanVatid) {
-            event.target.value = cleanVatid
+    if (event.target.value != cleanVatid) {
+        event.target.value = cleanVatid
 
-            // Set field and call `change` event to tell Vue
-            // This event unfortunately also calls this function again, so we return here to avoid a double request
-            event.target.dispatchEvent(new Event('change'))
-            return
-        }
+        // Set field and call `change` event to tell Vue
+        // This event unfortunately also calls this function again, so we return here to avoid a double request
+        event.target.dispatchEvent(new Event('change'))
+        return
+    }
 
-        event.target.setCustomValidity('')
+    event.target.setCustomValidity('')
 
-        if (!event.target.checkValidity()) {
-            return
-        }
+    if (!event.target.checkValidity()) {
+        return
+    }
 
-        if (!cleanVatid || cleanVatid.length == 0) {
-            return
-        }
+    if (!cleanVatid || cleanVatid.length == 0) {
+        return
+    }
 
-        if (preValidate(cleanVatid) === false) {
+    if (preValidate(cleanVatid) === false) {
+        event.target.setCustomValidity(window.config.vat_validation.translations.invalid)
+        return
+    }
+
+    if (!isViesCheckable(cleanVatid)) {
+        // If we can't check it by VIES, assume it's valid unless we enable the "force validation" config option
+        if (shouldForceValidate(cleanVatid)) {
             event.target.setCustomValidity(window.config.vat_validation.translations.invalid)
-            return
         }
 
-        if (!isViesCheckable(cleanVatid)) {
-            // If we can't check it by VIES, assume it's valid unless we enable the "force validation" config option
-            if (shouldForceValidate(cleanVatid)) {
-                event.target.setCustomValidity(window.config.vat_validation.translations.invalid)
-            }
+        return
+    }
 
-            return
-        }
+    let result = await validate(cleanVatid)
+    if (result === 'error') {
+        return
+    }
 
-        let result = await validate(cleanVatid)
-        if (result === 'error') {
-            return
-        }
-
-        event.target.setCustomValidity(result ? '' : window.config.vat_validation.translations.failed)
-        event.target.reportValidity()
-    });
-}
-
-document.addEventListener('vue:loaded', init)
-if (window.$on) {
-    init()
-}
+    event.target.setCustomValidity(result ? '' : window.config.vat_validation.translations.failed)
+    event.target.reportValidity()
+}, { autoremove: false });
