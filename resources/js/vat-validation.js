@@ -58,7 +58,7 @@ const validate = useMemoize(useThrottleFn(
             .catch((error) => {
                 if (FetchError.prototype.isPrototypeOf(error)) {
                     if (error.response.status === 422) {
-                        return false
+                        return error.response.json() ?? { message: window.config.vat_validation.translations.failed }
                     }
                 }
 
@@ -112,7 +112,7 @@ function init () {
             return
         }
 
-        event.target.setCustomValidity(result ? '' : window.config.vat_validation.translations.failed)
+        event.target.setCustomValidity(result.message ?? '')
         event.target.reportValidity()
     });
 }
