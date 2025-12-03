@@ -1,6 +1,7 @@
 import { useThrottleFn, useMemoize } from '@vueuse/core'
 import { token } from 'Vendor/rapidez/core/resources/js/stores/useUser'
 import { mask } from 'Vendor/rapidez/core/resources/js/stores/useMask'
+import { on } from 'Vendor/rapidez/core/resources/js/polyfills/emit.js'
 import { checkVAT, countries } from 'jsvat'
 
 const viesCheckable = ['AT', 'BE', 'BG', 'CY', 'CZ', 'DE', 'DK', 'EE', 'EL', 'ES', 'FI', 'FR', 'HR', 'HU', 'IE', 'IT', 'LT', 'LU', 'LV', 'MT', 'NL', 'PL', 'PT', 'RO', 'SE', 'SI', 'SK', 'XI']
@@ -58,7 +59,7 @@ const validate = useMemoize(useThrottleFn(
             .catch((error) => {
                 if (FetchError.prototype.isPrototypeOf(error)) {
                     if (error.response.status === 422) {
-                        return false
+                        return error.response.json() ?? { message: window.config.vat_validation.translations.failed }
                     }
                 }
 
@@ -91,6 +92,9 @@ export default async (el) => {
     if (!cleanVatid || cleanVatid.length == 0) {
         return
     }
+    if (!cleanVatid || cleanVatid.length == 0) {
+        return
+    }
 
     if (preValidate(cleanVatid) === false) {
         el.setCustomValidity(window.config.vat_validation.translations.invalid)
@@ -106,6 +110,10 @@ export default async (el) => {
         return
     }
 
+    let result = await validate(cleanVatid)
+    if (result === 'error') {
+        return
+    }
     let result = await validate(cleanVatid)
     if (result === 'error') {
         return

@@ -3,7 +3,7 @@
 namespace Rapidez\VatValidation\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Rapidez\VatValidation\Rules\VatValid;
+use Illuminate\Support\Arr;
 
 class VatController
 {
@@ -24,7 +24,10 @@ class VatController
         }
 
         $request->validate([
-            'id' => new VatValid,
+            'id' => Arr::map(
+                config('rapidez.vatvalidation.rules', [\Rapidez\VatValidation\Rules\VatValid::class]),
+                fn($class) => app($class)
+            ),
         ]);
 
         return true;

@@ -4,7 +4,6 @@ namespace Rapidez\VatValidation\Rules;
 
 use Closure;
 use Ibericode\Vat\Validator;
-use Ibericode\Vat\Vies\ViesException;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Support\Facades\Cache;
 
