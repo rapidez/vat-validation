@@ -71,21 +71,21 @@ const validate = useMemoize(useThrottleFn(
     true,
 ))
 
-on('vat-change', async (event) => {
-    let cleanVatid = event.target.value.replace(/[\s\.-]/g, '')
+export default async (el) => {
+    let cleanVatid = el.value.replace(/[\s\.-]/g, '')
 
-    if (event.target.value != cleanVatid) {
-        event.target.value = cleanVatid
+    if(el.value != cleanVatid) {
+        el.value = cleanVatid
 
         // Set field and call `change` event to tell Vue
         // This event unfortunately also calls this function again, so we return here to avoid a double request
-        event.target.dispatchEvent(new Event('change'))
+        el.dispatchEvent(new Event('change'))
         return
     }
 
-    event.target.setCustomValidity('')
+    el.setCustomValidity('')
 
-    if (!event.target.checkValidity()) {
+    if (!el.checkValidity()) {
         return
     }
 
@@ -94,16 +94,16 @@ on('vat-change', async (event) => {
     }
 
     if (preValidate(cleanVatid) === false) {
-        event.target.setCustomValidity(window.config.vat_validation.translations.invalid)
+        el.setCustomValidity(window.config.vat_validation.translations.invalid)
         return
     }
 
     if (!isViesCheckable(cleanVatid)) {
         // If we can't check it by VIES, assume it's valid unless we enable the "force validation" config option
         if (shouldForceValidate(cleanVatid)) {
-            event.target.setCustomValidity(window.config.vat_validation.translations.invalid)
+            el.setCustomValidity(window.config.vat_validation.translations.invalid)
         }
-
+        
         return
     }
 
@@ -112,6 +112,6 @@ on('vat-change', async (event) => {
         return
     }
 
-    event.target.setCustomValidity(result.message ?? '')
-    event.target.reportValidity()
-}, { autoremove: false });
+    el.setCustomValidity(result.message ?? '')
+    el.reportValidity()
+}

@@ -1,1 +1,1 @@
-(() => import('./vat-validation.js'))()
+(() => import('./directives.js'))()
