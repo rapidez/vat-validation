@@ -92,9 +92,6 @@ export default async (el) => {
     if (!cleanVatid || cleanVatid.length == 0) {
         return
     }
-    if (!cleanVatid || cleanVatid.length == 0) {
-        return
-    }
 
     if (preValidate(cleanVatid) === false) {
         el.setCustomValidity(window.config.vat_validation.translations.invalid)
@@ -114,11 +111,7 @@ export default async (el) => {
     if (result === 'error') {
         return
     }
-    let result = await validate(cleanVatid)
-    if (result === 'error') {
-        return
-    }
 
-    el.setCustomValidity(result ? '' : window.config.vat_validation.translations.failed)
+    el.setCustomValidity(result.message ?? '')
     el.reportValidity()
 }
