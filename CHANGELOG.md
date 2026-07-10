@@ -1,6 +1,12 @@
 # Changelog 
 
-[Unreleased changes](https://github.com/rapidez/vat-validation/compare/4.2.0...4.2.0)
+[Unreleased changes](https://github.com/rapidez/vat-validation/compare/4.2.1...4.2.1)
+## [4.2.1](https://github.com/rapidez/vat-validation/releases/tag/4.2.1) - 2025-11-25
+
+### Fixed
+
+- Return custom validation error when used (#13)
+
 ## [4.2.0](https://github.com/rapidez/vat-validation/releases/tag/4.2.0) - 2025-10-17
 
 ### Added
