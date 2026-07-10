@@ -1,6 +1,21 @@
 # Changelog 
 
-[Unreleased changes](https://github.com/rapidez/vat-validation/compare/4.2.0...4.2.0)
+[Unreleased changes](https://github.com/rapidez/vat-validation/compare/5.0.0...5.0.0)
+## [5.0.0](https://github.com/rapidez/vat-validation/releases/tag/5.0.0) - 2026-07-10
+
+### Added
+
+- Rapidez v5 support (#12)
+
+### Changed
+
+- Use Vue directive instead of adding the event manually (#6)
+
+### Fixed
+
+- Return custom validation error when used (#14)
+- Vue 3 compatibility fixes (#15, #16)
+
 ## [4.2.0](https://github.com/rapidez/vat-validation/releases/tag/4.2.0) - 2025-10-17
 
 ### Added
