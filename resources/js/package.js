@@ -1,1 +1,1 @@
-(() => import('./directives.js'))()
+import './directives.js'
