@@ -79,7 +79,7 @@ export default async (el) => {
 
         // Set field and call `change` event to tell Vue
         // This event unfortunately also calls this function again, so we return here to avoid a double request
-        el.dispatchEvent(new Event('change'))
+        setTimeout(() => el.dispatchEvent(new Event('change')))
         return
     }
 
@@ -103,7 +103,7 @@ export default async (el) => {
         if (shouldForceValidate(cleanVatid)) {
             el.setCustomValidity(window.config.vat_validation.translations.invalid)
         }
-        
+
         return
     }
 
