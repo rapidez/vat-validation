@@ -7,7 +7,7 @@ This package makes use of [jsvat](https://github.com/se-panfilov/jsvat) to pre-v
 ## Installation
 
 ```
-yarn add jsvat --dev
+yarn add jsvat-next --dev
 composer require rapidez/vat-validation
 ```
 
