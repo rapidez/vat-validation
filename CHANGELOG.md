@@ -1,6 +1,16 @@
 # Changelog 
 
-[Unreleased changes](https://github.com/rapidez/vat-validation/compare/5.0.0...5.0.0)
+[Unreleased changes](https://github.com/rapidez/vat-validation/compare/5.1.0...5.1.0)
+## [5.1.0](https://github.com/rapidez/vat-validation/releases/tag/5.1.0) - 2026-09-08
+
+### Changed
+
+- Use jsvat-next (#18)
+
+### Fixed
+
+- Fix certain race conditions (#17)
+
 ## [5.0.0](https://github.com/rapidez/vat-validation/releases/tag/5.0.0) - 2026-07-10
 
 ### Added
