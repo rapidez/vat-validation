@@ -1,7 +1,7 @@
 import { useThrottleFn, useMemoize } from '@vueuse/core'
 import { token } from 'Vendor/rapidez/core/resources/js/stores/useUser'
 import { mask } from 'Vendor/rapidez/core/resources/js/stores/useMask'
-import { checkVAT, countries } from 'jsvat'
+import { checkVAT, countries } from 'jsvat-next'
 
 const viesCheckable = ['AT', 'BE', 'BG', 'CY', 'CZ', 'DE', 'DK', 'EE', 'EL', 'ES', 'FI', 'FR', 'HR', 'HU', 'IE', 'IT', 'LT', 'LU', 'LV', 'MT', 'NL', 'PL', 'PT', 'RO', 'SE', 'SI', 'SK', 'XI']
 
