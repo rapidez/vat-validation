@@ -1,6 +1,12 @@
 # Changelog 
 
-[Unreleased changes](https://github.com/rapidez/vat-validation/compare/4.2.1...4.2.1)
+[Unreleased changes](https://github.com/rapidez/vat-validation/compare/4.3.0...4.3.0)
+## [4.3.0](https://github.com/rapidez/vat-validation/releases/tag/4.3.0) - 2026-09-08
+
+### Changed
+
+- Use jsvat-next (#19)
+
 ## [4.2.1](https://github.com/rapidez/vat-validation/releases/tag/4.2.1) - 2025-11-25
 
 ### Fixed
