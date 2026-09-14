@@ -26,7 +26,7 @@ class VatValid implements ValidationRule
         }
 
         if (!$result) {
-            $fail('frontend.vat_validation.failed')->translate();
+            $fail('rapidez-vat::frontend.vat_validation.failed')->translate();
         }
     }
 }
