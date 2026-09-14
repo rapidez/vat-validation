@@ -4,6 +4,7 @@ namespace Rapidez\VatValidation\Rules;
 
 use Closure;
 use Ibericode\Vat\Validator;
+use Ibericode\Vat\Vies\ViesException;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Support\Facades\Cache;
 
@@ -15,9 +16,14 @@ class VatValid implements ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         $validator = new Validator;
-        $result = Cache::remember('vat_' . $value, config('rapidez.vatvalidation.cache_duration'), function () use ($value, $validator) {
-            return $validator->validateVatNumber($value);
-        });
+        try {
+            $result = Cache::remember('vat_' . $value, config('rapidez.vatvalidation.cache_duration'), function () use ($value, $validator) {
+                return $validator->validateVatNumber($value);
+            });
+        } catch (ViesException $e) {
+            $fail($e->getMessage());
+            return;
+        }
 
         if (!$result) {
             $fail('frontend.vat_validation.failed')->translate();
