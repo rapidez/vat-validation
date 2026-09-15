@@ -56,11 +56,15 @@ const validate = useMemoize(useThrottleFn(
 
         return await window
             .rapidezAPI('post', 'vat-validate', data, options)
-            .catch((error) => {
-                if (FetchError.prototype.isPrototypeOf(error)) {
-                    if (error.response.status === 422) {
-                        return error.response.json() ?? { message: window.config.vat_validation.translations.failed }
+            .catch(async (error) => {
+                if (FetchError.prototype.isPrototypeOf(error) && error.response.status === 422) {
+                    let response = await error.response.json()
+                    if (response.message.startsWith('MS_')) {
+                        // The VIES service didn't work. Allow the check to be skipped
+                        return 'error'
                     }
+
+                    return response ?? { message: window.config.vat_validation.translations.failed }
                 }
 
                 window.Notify(window.config.translations.errors.wrong, 'error')
