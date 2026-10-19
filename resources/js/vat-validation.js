@@ -81,7 +81,9 @@ export default async (el) => {
     if(el.value != cleanVatid) {
         el.value = cleanVatid
 
-        // Set field and call `change` event to tell Vue
+        // Set field and call `input` and `change` event to tell Vue
+        el.dispatchEvent(new Event('input'))
+        
         // This event unfortunately also calls this function again, so we return here to avoid a double request
         setTimeout(() => el.dispatchEvent(new Event('change')))
         return
