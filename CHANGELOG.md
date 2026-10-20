@@ -1,6 +1,13 @@
 # Changelog 
 
-[Unreleased changes](https://github.com/rapidez/vat-validation/compare/5.1.1...5.1.1)
+[Unreleased changes](https://github.com/rapidez/vat-validation/compare/5.1.2...5.1.2)
+## [5.1.2](https://github.com/rapidez/vat-validation/releases/tag/5.1.2) - 2026-10-20
+
+### Fixed
+
+- Use pnpm instead of yarn (13f9191)
+- Also call input event on cleanup (#21)
+
 ## [5.1.1](https://github.com/rapidez/vat-validation/releases/tag/5.1.1) - 2026-09-15
 
 ### Fixed
